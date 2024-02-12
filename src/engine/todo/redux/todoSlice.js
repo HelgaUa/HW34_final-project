@@ -24,9 +24,16 @@ const todoSlice = createSlice({
         toggleItem: (state, action) => {
             const index = state.items.findIndex((item) => item.id === action.payload);
             console.log(action.payload, index)
+
             state.items[index].isChecked = !state.items[index].isChecked;
         },
 
     }
 })
 export default todoSlice;
+
+//const targetItem = state.items.splice(index, 1)[0];
+//targetItem.isChecked = !targetItem.isChecked;
+// targetItem.isChecked
+//     ? state.items.push(targetItem)
+//     : state.items.unshift(targetItem);

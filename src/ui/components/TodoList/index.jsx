@@ -9,7 +9,8 @@ import { useDispatch, useSelector } from "react-redux";
 import selectors from "../../../engine/todo/redux/selectors.js";
 import todoSlice from "../../../engine/todo/redux/todoSlice.js";
 import { useEffect } from "react";
-import { getDataAsyncAction } from '../../../engine/todo/saga/asyncActions.js'
+import { getDataAsyncAction } from '../../../engine/todo/saga/asyncActions.js';
+// import { useFormik } from "formik";
 
 
 export function TodoList() {
@@ -38,7 +39,7 @@ export function TodoList() {
             }}>
                 {
                     items.length === 0
-                    ? <span>No items</span>
+                    ? <Box sx={{padding: '10px'}}>No items</Box>
                     : (
                         items.map((item) => {
 

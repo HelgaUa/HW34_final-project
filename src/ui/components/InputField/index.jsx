@@ -20,7 +20,9 @@ export function InputField() {
         onSubmit: (values) => {
             dispatch(setDataAsyncAction(values));
             formik.resetForm();
+            console.log(values)
         },
+
         validate: (values) => inputValidate(values),
     })
 
@@ -37,9 +39,10 @@ export function InputField() {
                         value={formik.values.inputTodo}
                         name="inputTodo"
                     />
-                    {formik.touched.inputTodo && formik.errors.inputTodo ? <Box sx={{color: 'red'}} fixed>{formik.errors.inputTodo}</Box> : null}
+                    {formik.touched.inputTodo && formik.errors.inputTodo ? <Box sx={{color: 'red'}}>{formik.errors.inputTodo}</Box> : null}
+
                     <Divider sx={{height: 28, m: 0.5}} orientation="vertical"/>
-                    <IconButton type='submit'  color="primary" disabled={loading} sx={{p: '10px'}} aria-label="directions">
+                    <IconButton type='submit'  color="primary" disabled={ loading || !!Object.keys(formik.errors).length } sx={{p: '10px'}} aria-label="directions">
                         <DirectionsIcon/>
                     </IconButton>
                 </Container>
