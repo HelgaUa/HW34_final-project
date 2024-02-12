@@ -9,8 +9,8 @@ import { useDispatch, useSelector } from "react-redux";
 import selectors from "../../../engine/todo/redux/selectors.js";
 import todoSlice from "../../../engine/todo/redux/todoSlice.js";
 import { useEffect } from "react";
-import { getDataAsyncAction } from '../../../engine/todo/saga/asyncActions.js';
-// import { useFormik } from "formik";
+import { getDataAsyncAction, filterDataAction } from '../../../engine/todo/saga/asyncActions.js';
+//import { useFormik } from "formik";
 
 
 export function TodoList() {
@@ -24,7 +24,9 @@ export function TodoList() {
         dispatch(getDataAsyncAction());
     }, []);
     const handleToggle = (id) => {
-        dispatch(todoSlice.actions.toggleItem(id));
+        dispatch(todoSlice.actions.toggleItem(id));// перенести в
+        //dispatch(filterDataAction(id));
+        localStorage.setItem('items', JSON.stringify(items));//відстає на один клік
     }
 
     return(

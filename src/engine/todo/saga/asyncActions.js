@@ -4,4 +4,4 @@ export const getDataAsyncAction = createAction('GET_DATA_ASYNC');
 export const setDataAsyncAction = createAction('SET_DATA_ASYNC');
 export const clearDataAsyncAction = createAction('CLEAR_DATA_ASYNC');
 
-//export const filterItems = createAction('FILTER_ITEMS');
+export const filterDataAction = createAction('FILTER_DATA_ACTION');
