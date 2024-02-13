@@ -9,6 +9,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { useSelector, useDispatch } from "react-redux";
 import selectors from "../../../engine/todo/redux/selectors.js";
 import { clearDataAsyncAction } from "../../../engine/todo/saga/asyncActions.js";
+import {Form, FormikProvider, useFormik} from "formik";
 
 export function Footer() {
     const items = useSelector(selectors.itemsSelector);
@@ -17,6 +18,16 @@ export function Footer() {
         dispatch(clearDataAsyncAction());
         localStorage.clear();
     };
+
+    const formik = useFormik({
+        initialValues: {
+            search: '',
+        },
+        // onSubmit: values => {
+        //     console.log('Search Query:', values.search);
+        // },
+    });
+
     return(
         <Box sx={{
             display: 'flex',
@@ -28,19 +39,28 @@ export function Footer() {
             <Button variant='contained' onClick={onClear} startIcon={<DeleteIcon />}>
                 Delete
             </Button>
-            <Paper
-                component="form"
-                sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: 400 }}
-            >
-                <InputBase
-                    sx={{ ml: 1, flex: 1 }}
-                    placeholder="Search"
-                    inputProps={{ 'aria-label': 'search google maps' }}
-                />
-                <IconButton type="button" sx={{ p: '10px' }} aria-label="search">
-                    <SearchIcon />
-                </IconButton>
-            </Paper>
+            <FormikProvider value={formik}>
+                <Form>
+                    <Paper
+                        component="form"
+                        sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: 400 }}
+                    >
+                        <InputBase
+                            sx={{ ml: 1, flex: 1 }}
+                            placeholder="Search"
+                            inputProps={{ 'aria-label': 'search google maps' }}
+                            onChange={formik.handleChange}
+                            value={formik.values.search}
+                            name='search'
+                            //timeout
+                        />
+                        <IconButton type="button" sx={{ p: '10px' }} aria-label="search">
+                            <SearchIcon />
+                        </IconButton>
+                    </Paper>
+                </Form>
+            </FormikProvider>
+
         </Box>
     )
 }

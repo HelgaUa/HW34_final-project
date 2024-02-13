@@ -7,15 +7,28 @@ import Checkbox from '@mui/material/Checkbox';
 import Box from "@mui/material/Box";
 import { useDispatch, useSelector } from "react-redux";
 import selectors from "../../../engine/todo/redux/selectors.js";
-import todoSlice from "../../../engine/todo/redux/todoSlice.js";
 import { useEffect } from "react";
-import { getDataAsyncAction, filterDataAction } from '../../../engine/todo/saga/asyncActions.js';
-//import { useFormik } from "formik";
+import {getDataAsyncAction, checkingItemsAction} from '../../../engine/todo/saga/asyncActions.js';
 
 
 export function TodoList() {
     const items = useSelector(selectors.itemsSelector);
     const dispatch = useDispatch();
+    const sortedItems = [...items].sort((a, b) => (a.isChecked === b.isChecked)
+        ? 0
+        : a.isChecked
+            ? 1
+            : -1);
+
+    const filteredItems = () => {
+
+        if (formik.values.search.trim() === "") {
+            return sortedItems;
+        } else {
+            return sortedItems.filter(item => item.text.includes(formik.values.search.trim()));
+        }
+    };
+
     // const handleRemoveItem = (id) => {
     //     dispatch(todoSlice.actions.removeItem(id));
     // }
@@ -23,10 +36,9 @@ export function TodoList() {
     useEffect(() => {
         dispatch(getDataAsyncAction());
     }, []);
+
     const handleToggle = (id) => {
-        dispatch(todoSlice.actions.toggleItem(id));// перенести в
-        //dispatch(filterDataAction(id));
-        localStorage.setItem('items', JSON.stringify(items));//відстає на один клік
+        dispatch(checkingItemsAction(id));
     }
 
     return(
@@ -40,11 +52,10 @@ export function TodoList() {
                 borderRadius: '5px',
             }}>
                 {
-                    items.length === 0
+                    sortedItems.length === 0
                     ? <Box sx={{padding: '10px'}}>No items</Box>
                     : (
-                        items.map((item) => {
-
+                            sortedItems.map((item) => {
                             return (
                                 <ListItem
                                     key={item.id}
@@ -57,10 +68,6 @@ export function TodoList() {
                                                 edge="start"
                                                 checked={item.isChecked}
                                                 onClick = {() => handleToggle(item.id)}
-
-                                                // checked={checked.indexOf(value) !== -1}
-                                                // tabIndex={-1}
-                                                // disableRipple
                                                 inputProps={{ 'aria-labelledby': item.text }}
                                             />
                                         </ListItemIcon>
@@ -73,6 +80,5 @@ export function TodoList() {
                 }
             </List>
         </Box>
-
     )
 }
