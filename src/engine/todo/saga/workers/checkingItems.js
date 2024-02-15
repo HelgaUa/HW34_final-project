@@ -6,6 +6,5 @@ export function* checkingItemsWorker(action) {
     yield put(todoSlice.actions.toggleItem(payload));
 
     const state = yield select();
-    console.log(action)
     localStorage.setItem('items', JSON.stringify(state.todo.items));
 }
