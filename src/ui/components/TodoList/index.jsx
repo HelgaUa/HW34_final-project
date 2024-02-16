@@ -12,7 +12,6 @@ import selectors from "../../../engine/todo/redux/selectors.js";
 import {useEffect} from "react";
 import {getDataAsyncAction, checkingItemsAction, deleteItemAction} from '../../../engine/todo/saga/asyncActions.js';
 
-
 export function TodoList() {
     const items = useSelector(selectors.itemsSelector);
     const search = useSelector(selectors.searchSelector);
@@ -44,6 +43,7 @@ export function TodoList() {
             flex: 1,
             width: '100%',
             marginTop: '10px',
+            paddingBottom: '50px',
             borderRadius: '5px'
         }}>
             <List sx={{
@@ -52,7 +52,7 @@ export function TodoList() {
             }}>
                 {
                     filteredItems.length === 0 && search.length === 0
-                        ? <Box sx={{padding: '10px', colour: 'green'}}>There is no items</Box>
+                        ? <Box sx={{padding: '10px', color: 'green'}}>There is no items!</Box>
                         : (
                             filteredItems.map((item) => {
                                 return (

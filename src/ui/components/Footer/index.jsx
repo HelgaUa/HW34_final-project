@@ -24,9 +24,6 @@ export function Footer() {
         initialValues: {
             search: '',
         },
-        validate: values => {
-            console.log(values)
-        }
     });
 
     useEffect(() => {
@@ -34,9 +31,8 @@ export function Footer() {
     }, [formik.values.search]);
 
     const resetSearch = () => {
-            //formik.setFieldValue('search', '');
+            formik.setFieldValue('search', '');
             dispatch(todoSlice.actions.clearSearch());
-            formik.resetForm();
     }
 
     return(
@@ -48,14 +44,14 @@ export function Footer() {
             maxWidth: '860px',
             width: '100%',
             boxSizing: 'border-box',
-            padding: '10px 30px',
+            padding: '10px 30px 30px 30px',
             bgcolor: '#c9e0f7',
             alignItems: 'center',
         }}
         >
             <Chip label={`Number of tasks: ${items.length}`} />
             <Button variant='contained' onClick={onClear} startIcon={<DeleteIcon />}>
-                Delete
+                Delete all
             </Button>
             <FormikProvider value={formik}>
                 <Form>
@@ -66,9 +62,9 @@ export function Footer() {
                         <InputBase
                             sx={{ ml: 1, flex: 1 }}
                             placeholder="Search"
-                            inputProps={{ 'aria-label': 'search google maps' }}
                             name='search'
-                            onChange={(e) => {formik.setFieldValue('search', e.target.value)}}
+                            value={formik.values.search}
+                            onChange={formik.handleChange}
                         />
                         <IconButton
                             aria-label="delete"
